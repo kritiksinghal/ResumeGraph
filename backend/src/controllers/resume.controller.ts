@@ -2,12 +2,38 @@ import { Request, Response, NextFunction } from 'express';
 import { resumeService } from '../services/resume.service';
 import { documentExtractionService } from '../services/extraction/document.service';
 import { resumeStructurer } from '../services/ai/resume.structurer';
+import { resumeIngestionService } from '../services/resume-ingestion.service';
 import {
   createResumeRequestSchema,
   updateResumeRequestSchema,
   structureResumeRequestSchema,
 } from '../schemas/resume.schema';
 import { AppError } from '../middlewares/errorHandler';
+
+export async function ingestResumeHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    if (!req.file) {
+      throw new AppError('No resume file provided. Please attach a file under field name "resume"', 400);
+    }
+
+    const ingested = await resumeIngestionService.ingestResume(
+      req.file.buffer,
+      req.file.originalname,
+      req.file.mimetype
+    );
+
+    res.status(201).json({
+      success: true,
+      data: ingested,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function structureResumeHandler(
   req: Request,

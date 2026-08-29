@@ -16,19 +16,14 @@ import { AppError } from '../middlewares/errorHandler';
 
 export class ResumeService {
   /**
-   * Creates a new resume with backend-generated UUIDs for all entities.
+   * Persists pre-validated ResumeData to PostgreSQL.
    */
-  async createResume(
+  async persistStructuredResume(
     title: string,
-    dataInput: CreateResumeDataInput
+    data: ResumeData
   ): Promise<ResumeEntity> {
-    // 1. Assign backend-owned IDs to all entities
-    const fullResumeData = assignResumeDataIds(dataInput);
+    const validatedData = resumeDataSchema.parse(data);
 
-    // 2. Validate against stored schema
-    const validatedData = resumeDataSchema.parse(fullResumeData);
-
-    // 3. Persist to PostgreSQL
     const [inserted] = await db
       .insert(resumes)
       .values({
@@ -46,6 +41,17 @@ export class ResumeService {
       createdAt: inserted.createdAt,
       updatedAt: inserted.updatedAt,
     };
+  }
+
+  /**
+   * Creates a new resume with backend-generated UUIDs for all entities.
+   */
+  async createResume(
+    title: string,
+    dataInput: CreateResumeDataInput
+  ): Promise<ResumeEntity> {
+    const fullResumeData = assignResumeDataIds(dataInput);
+    return this.persistStructuredResume(title, fullResumeData);
   }
 
   /**

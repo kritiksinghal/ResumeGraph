@@ -7,10 +7,14 @@ import {
   deleteResumeHandler,
   uploadResumeHandler,
   structureResumeHandler,
+  ingestResumeHandler,
 } from '../controllers/resume.controller';
 import { uploadResumeMiddleware } from '../middlewares/upload.middleware';
 
 const resumeRouter = Router();
+
+// End-to-end Ingestion: Upload -> Extract -> Structure -> Persist
+resumeRouter.post('/resumes/ingest', uploadResumeMiddleware, ingestResumeHandler);
 
 // Upload & extract raw text from PDF / DOCX
 resumeRouter.post('/resumes/upload', uploadResumeMiddleware, uploadResumeHandler);

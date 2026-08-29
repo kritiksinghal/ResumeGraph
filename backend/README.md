@@ -81,6 +81,7 @@ The server will start on `http://localhost:4000`.
 |---|---|---|
 | `GET` | `/health` | Health check (uptime, DB status, environment) |
 | `GET` | `/api/health` | Health check via `/api` route |
+| `POST` | `/api/resumes/ingest` | Complete end-to-end ingestion (Upload -> Extract -> AI Structure -> Persist to DB) |
 | `POST` | `/api/resumes/upload` | Upload & extract raw text from PDF or DOCX file (multipart/form-data) |
 | `POST` | `/api/resumes/structure` | Structure raw resume text into ResumeData contract via Claude AI |
 | `POST` | `/api/resumes` | Create a new structured resume (backend assigns UUIDs) |
