@@ -1,10 +1,56 @@
 import { Request, Response, NextFunction } from 'express';
 import { resumeService } from '../services/resume.service';
+import { documentExtractionService } from '../services/extraction/document.service';
+import { resumeStructurer } from '../services/ai/resume.structurer';
 import {
   createResumeRequestSchema,
   updateResumeRequestSchema,
+  structureResumeRequestSchema,
 } from '../schemas/resume.schema';
 import { AppError } from '../middlewares/errorHandler';
+
+export async function structureResumeHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const validated = structureResumeRequestSchema.parse(req.body);
+    const structuredData = await resumeStructurer.structureResumeText(validated.text);
+
+    res.status(200).json({
+      success: true,
+      data: structuredData,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function uploadResumeHandler(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    if (!req.file) {
+      throw new AppError('No resume file uploaded', 400);
+    }
+
+    const extracted = await documentExtractionService.extractDocumentText(
+      req.file.buffer,
+      req.file.originalname,
+      req.file.mimetype
+    );
+
+    res.status(200).json({
+      success: true,
+      data: extracted,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function createResumeHandler(
   req: Request,

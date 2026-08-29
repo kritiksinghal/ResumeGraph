@@ -8,6 +8,8 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(4000),
   CORS_ORIGIN: z.string().default('*'),
   DATABASE_URL: z.string().default('postgresql://postgres:postgres@localhost:5432/resumegraph'),
+  ANTHROPIC_API_KEY: z.string().optional().default(''),
+  ANTHROPIC_MODEL: z.string().default('claude-3-5-sonnet-20241022'),
 });
 
 const parseEnv = () => {

@@ -203,6 +203,12 @@ export const updateResumeRequestSchema = z
   })
   .strict();
 
+export const structureResumeRequestSchema = z
+  .object({
+    text: z.string().min(1, 'Resume text is required'),
+  })
+  .strict();
+
 // ============================================================================
 // BACKEND-OWNED ID GENERATION HELPERS (Service Layer)
 // ============================================================================
