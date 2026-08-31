@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #F4F1EA;
+    color: #121212;
+  }
+}
+
+.font-serif-display {
+  font-family: 'Playfair Display', 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+.font-calligraphy-display {
+  font-family: 'Cormorant Garamond', 'Playfair Display', 'Newsreader', Georgia, serif;
+}
+
+.font-editorial-body {
+  font-family: 'Newsreader', Georgia, serif;
+}
+
+.font-space {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Editorial subtle borders and custom paper surfaces */
+.bg-parchment {
+  background-color: #F4F1EA;
+}
+
+.bg-parchment-light {
+  background-color: #FAF8F5;
+}
+
+.bg-parchment-card {
+  background-color: #FAF8F5;
+}
+
+.bg-ink {
+  background-color: #121212;
+}
+
+.text-ink {
+  color: #121212;
+}
+
+.border-ink {
+  border-color: #121212;
+}
+
+.border-ink-muted {
+  border-color: rgba(18, 18, 18, 0.15);
+}
+
+.border-ink-subtle {
+  border-color: rgba(18, 18, 18, 0.08);
+}
+
+/* Hairline divider helper */
+.hairline-b {
+  border-bottom: 1px solid #121212;
+}
+
+.hairline-t {
+  border-top: 1px solid #121212;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #EAE6DC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4BEB1;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #121212;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-resume-page, #printable-resume-page * {
+    visibility: visible;
+  }
+  #printable-resume-page {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    min-height: auto !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}

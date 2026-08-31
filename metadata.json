@@ -1,0 +1,7 @@
+{
+  "name": "ResumeFlow",
+  "description": "Semantic document evolution framework for AI-assisted resume optimization with version control, role branching, semantic diff, and ATS matching.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
